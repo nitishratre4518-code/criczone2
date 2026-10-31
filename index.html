@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#08100d">
+    <meta name="description" content="Choose a Criczone live sports channel hub.">
+    <title>Criczone | Live Sports Hubs</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            color-scheme: dark;
+            --bg: #08100d;
+            --panel: #101a15;
+            --panel-hover: #14221b;
+            --text: #f1f6f2;
+            --muted: #9aa99f;
+            --line: rgba(210, 230, 216, .13);
+            --mint: #72e0aa;
+            --lime: #d5ef7b;
+            --blue: #70c7e8;
+        }
+
+        * { box-sizing: border-box; }
+
+        body {
+            min-width: 320px;
+            min-height: 100vh;
+            margin: 0;
+            color: var(--text);
+            background:
+                linear-gradient(rgba(8, 16, 13, .96), rgba(8, 16, 13, .98)),
+                repeating-linear-gradient(0deg, transparent 0 63px, rgba(210, 230, 216, .05) 64px),
+                var(--bg);
+            font-family: "Manrope", sans-serif;
+        }
+
+        a { color: inherit; }
+
+        .shell {
+            width: min(100% - 40px, 1040px);
+            margin-inline: auto;
+            padding: 28px 0 36px;
+        }
+
+        .masthead {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            min-height: 54px;
+            border-bottom: 1px solid var(--line);
+            padding-bottom: 18px;
+        }
+
+        .brand {
+            display: inline-flex;
+            align-items: center;
+            gap: 11px;
+            text-decoration: none;
+        }
+
+        .brand-mark {
+            display: grid;
+            width: 42px;
+            aspect-ratio: 1;
+            place-items: center;
+            border: 1px solid rgba(114, 224, 170, .32);
+            border-radius: 12px;
+            background: linear-gradient(145deg, rgba(114, 224, 170, .16), rgba(112, 199, 232, .08));
+            font-size: 22px;
+        }
+
+        .brand-name {
+            display: block;
+            font: 700 17px/1 "Space Grotesk", sans-serif;
+        }
+
+        .brand-sub {
+            display: block;
+            margin-top: 5px;
+            color: var(--muted);
+            font-size: 9px;
+            font-weight: 700;
+            letter-spacing: 1.5px;
+        }
+
+        .live-state {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            color: var(--mint);
+            font-size: 10px;
+            font-weight: 800;
+            letter-spacing: 1px;
+        }
+
+        .live-state::before {
+            width: 7px;
+            aspect-ratio: 1;
+            border-radius: 50%;
+            background: var(--mint);
+            box-shadow: 0 0 12px rgba(114, 224, 170, .6);
+            content: "";
+        }
+
+        main { padding-top: clamp(34px, 7vw, 70px); }
+
+        .intro {
+            max-width: 650px;
+            margin-bottom: 30px;
+            animation: rise-in .55s cubic-bezier(.2, .7, .2, 1) both;
+        }
+
+        .eyebrow {
+            display: flex;
+            align-items: center;
+            gap: 9px;
+            margin-bottom: 14px;
+            color: var(--mint);
+            font-size: 10px;
+            font-weight: 800;
+            letter-spacing: 1.8px;
+        }
+
+        .eyebrow::before {
+            width: 24px;
+            height: 1px;
+            background: var(--mint);
+            content: "";
+        }
+
+        h1 {
+            margin: 0;
+            font: 700 clamp(34px, 7vw, 58px)/1.02 "Space Grotesk", sans-serif;
+        }
+
+        h1 span { color: var(--lime); }
+
+        .intro p {
+            max-width: 470px;
+            margin: 14px 0 0;
+            color: var(--muted);
+            font-size: 13px;
+            line-height: 1.65;
+        }
+
+        .hub-grid {
+            display: grid;
+            grid-template-columns: minmax(0, 520px);
+            gap: 12px;
+        }
+
+        .hub-card {
+            display: grid;
+            grid-template-columns: 42px minmax(0, 1fr) 24px;
+            align-items: center;
+            gap: 13px;
+            min-height: 92px;
+            padding: 16px 18px;
+            border: 1px solid var(--line);
+            border-radius: 8px;
+            background: linear-gradient(115deg, rgba(255, 255, 255, .035), rgba(255, 255, 255, .012));
+            text-decoration: none;
+            animation: rise-in .48s cubic-bezier(.2, .7, .2, 1) both;
+            transition: background .18s ease, border-color .18s ease, transform .18s ease;
+        }
+
+        .hub-card:nth-child(2) { animation-delay: .05s; }
+        .hub-card:nth-child(3) { animation-delay: .1s; }
+        .hub-card:nth-child(4) { animation-delay: .15s; }
+        .hub-card:nth-child(5) { animation-delay: .2s; }
+
+        .hub-card:hover {
+            transform: translateY(-2px);
+            border-color: rgba(114, 224, 170, .42);
+            background: var(--panel-hover);
+        }
+
+        .hub-card:focus-visible,
+        .community-link:focus-visible {
+            outline: 2px solid var(--lime);
+            outline-offset: 3px;
+        }
+
+        .hub-number {
+            color: var(--mint);
+            font: 700 13px "Space Grotesk", sans-serif;
+        }
+
+        .hub-copy { min-width: 0; }
+
+        .hub-title {
+            display: block;
+            overflow-wrap: anywhere;
+            font: 700 15px/1.25 "Space Grotesk", sans-serif;
+        }
+
+        .hub-detail {
+            display: block;
+            margin-top: 5px;
+            color: var(--muted);
+            font-size: 10px;
+            line-height: 1.4;
+        }
+
+        .hub-arrow {
+            color: var(--lime);
+            font-size: 19px;
+            text-align: right;
+            transition: transform .18s ease;
+        }
+
+        .hub-card:hover .hub-arrow { transform: translateX(3px); }
+
+        .redirect-spinner {
+            width: 24px;
+            aspect-ratio: 1;
+            margin-top: 22px;
+            border: 2px solid rgba(210, 230, 216, .18);
+            border-top-color: var(--mint);
+            border-radius: 50%;
+            animation: spin .8s linear infinite;
+        }
+
+        @keyframes spin { to { transform: rotate(360deg); } }
+
+        footer {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 14px;
+            margin-top: 28px;
+            padding-top: 16px;
+            border-top: 1px solid var(--line);
+            color: #77867d;
+            font-size: 10px;
+        }
+
+        .community-link {
+            color: var(--blue);
+            font-weight: 700;
+            text-decoration: none;
+        }
+
+        @keyframes rise-in {
+            from { opacity: 0; transform: translateY(12px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @media (max-width: 620px) {
+            .shell { width: min(100% - 28px, 460px); padding-top: 16px; }
+            main { padding-top: 36px; }
+            .hub-grid { grid-template-columns: 1fr; gap: 9px; }
+            .hub-card { min-height: 78px; padding: 13px 14px; }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after {
+                animation-duration: .01ms !important;
+                animation-iteration-count: 1 !important;
+                scroll-behavior: auto !important;
+                transition-duration: .01ms !important;
+            }
+        }
+    
+/* ===== CRICZONE UI POLISH v1 ===== */
+html{scroll-behavior:smooth}button,a,input,select{-webkit-tap-highlight-color:transparent}button:focus-visible,a:focus-visible,input:focus-visible,select:focus-visible{outline:2px solid rgba(52,211,153,.9)!important;outline-offset:3px!important}.header,.nav,#ch-header,.list-header{backdrop-filter:blur(18px) saturate(1.15);-webkit-backdrop-filter:blur(18px) saturate(1.15);box-shadow:0 8px 30px rgba(0,0,0,.12)}.search-box,.search input,.cc-search input,#cc-sort{border-radius:12px!important;transition:border-color .2s,box-shadow .2s,background .2s!important}.search-box:focus-within,.search input:focus,.cc-search input:focus{border-color:rgba(52,211,153,.55)!important;box-shadow:0 0 0 4px rgba(52,211,153,.09),0 10px 30px rgba(0,0,0,.14)!important}.filter-btn,.cc-chip{border-radius:999px!important;font-weight:700!important}.filter-btn:hover,.cc-chip:hover{transform:translateY(-1px);border-color:rgba(52,211,153,.45)!important}.channel-card,.ch-card{overflow:hidden;border-radius:18px!important;box-shadow:0 10px 28px rgba(0,0,0,.18)}.channel-card:hover,.ch-card:hover{transform:translateY(-5px);box-shadow:0 18px 42px rgba(0,0,0,.30),0 0 0 1px rgba(52,211,153,.14)}.channel-card img,.ch-card img{transition:transform .45s cubic-bezier(.2,.7,.2,1),filter .3s}.channel-card:hover img,.ch-card:hover img{transform:scale(1.045);filter:saturate(1.08) brightness(1.04)}#cc-hero{overflow:hidden;border-radius:22px!important;box-shadow:0 20px 55px rgba(0,0,0,.25)}*{scrollbar-width:thin;scrollbar-color:rgba(52,211,153,.35) transparent}*::-webkit-scrollbar{width:8px;height:8px}*::-webkit-scrollbar-track{background:transparent}*::-webkit-scrollbar-thumb{background:rgba(52,211,153,.28);border-radius:999px}*::-webkit-scrollbar-thumb:hover{background:rgba(52,211,153,.5)}@media(max-width:700px){.channel-card,.ch-card{border-radius:15px!important}.search-box,.search input,.cc-search input,#cc-sort{min-height:44px}}@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}}
+</style>
+
+<meta name="theme-color" content="#08100d">
+<meta name="description" content="CricZone live sports hubs">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<link rel="manifest" href="/manifest.json">
+<link rel="icon" href="/photos/photo_2026-10-28_14-52-23.jpg">
+<link rel="apple-touch-icon" href="/photos/photo_2026-10-28_14-52-23.jpg">
+  <link rel="stylesheet" href="/site-polish.css?v=20261030-api-path-fix">
+</head>
+<body>
+<!-- CRICZONE anti-popunder guard: block unsolicited script-opened tabs/windows -->
+<script>
+(() => {
+  // Block scripted popup handlers attached to taps/clicks, while preserving normal site controls and links.
+  document.addEventListener('click', event => {
+    const link = event.target && event.target.closest ? event.target.closest('a[href]') : null;
+    if (link && link.target === '_blank') {
+      const href = link.getAttribute('href') || '';
+      if (/^(javascript:|data:)/i.test(href.trim())) {
+        event.preventDefault();
+        event.stopImmediatePropagation();
+      }
+    }
+  }, true);
+  // Sandboxed iframes must not be granted allow-popups; this observer removes it if added later.
+  const sandboxFrames = root => {
+    if (!root || !root.querySelectorAll) return;
+    root.querySelectorAll('iframe').forEach(frame => {
+      if (frame.hasAttribute('sandbox')) {
+        const tokens = frame.getAttribute('sandbox').split(/\s+/).filter(Boolean).filter(token => token !== 'allow-popups' && token !== 'allow-popups-to-escape-sandbox');
+        frame.setAttribute('sandbox', tokens.join(' '));
+      }
+    });
+  };
+  const watch = () => {
+    const host = document.querySelector('criczone-ui');
+    if (!host || !host.shadowRoot) return;
+    sandboxFrames(host.shadowRoot);
+    new MutationObserver(() => sandboxFrames(host.shadowRoot)).observe(host.shadowRoot, { childList: true, subtree: true, attributes: true, attributeFilter: ['sandbox'] });
+  };
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', watch, { once: true });
+  else watch();
+})();
+</script>
+
+    <div class="shell">
+        <header class="masthead">
+            <a class="brand" href="./" aria-label="Criczone home">
+                <span class="brand-mark" aria-hidden="true">🏏</span>
+                <span>
+                    <span class="brand-name">CRICZONE</span>
+                    <span class="brand-sub">LIVE SPORTS NETWORK</span>
+                </span>
+            </a>
+            <span class="live-state">LIVE SPORTS NETWORK</span>
+        </header>
+
+        <main>
+            <section class="intro" aria-labelledby="page-title">
+                <div class="eyebrow">CRICZONE LIVE</div>
+                <h1 id="page-title">Live updates.<br><span>One channel.</span></h1>
+                <p>Explore CRICZONE live sports and match coverage.</p>
+            </section>
+
+            <nav class="hub-grid" aria-label="Criczone links"></nav>
+
+            
+        </main>
+
+        <footer>
+            <span>CRICZONE · LIVE SPORTS</span>
+            <span class="community-link">CRICZONE LIVE</span>
+        </footer>
+    </div>
+
+
+<script>if("serviceWorker" in navigator){window.addEventListener("load",()=>navigator.serviceWorker.register("/service-worker.js",{scope:"/"}).catch(e=>console.warn("CricZone PWA:",e)));}</script>
+
+
+</body>
+</html>

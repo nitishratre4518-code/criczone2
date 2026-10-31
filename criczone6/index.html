@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Criczone Live - Sports TV</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Manrope:wght@400;500;600;700;800;900&family=Space+Grotesk:wght@500;600;700;800&family=Syne:wght@700;800&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="/criczone6/style.css">
+  <link rel="stylesheet" href="../site-polish.css?v=20261019-premium-ui">
+</head>
+
+<body>
+<!-- CRICZONE anti-popunder guard: block unsolicited script-opened tabs/windows -->
+<script>
+(() => {
+  // Block scripted popup handlers attached to taps/clicks, while preserving normal site controls and links.
+  document.addEventListener('click', event => {
+    const link = event.target && event.target.closest ? event.target.closest('a[href]') : null;
+    if (link && link.target === '_blank') {
+      const href = link.getAttribute('href') || '';
+      if (/^(javascript:|data:)/i.test(href.trim())) {
+        event.preventDefault();
+        event.stopImmediatePropagation();
+      }
+    }
+  }, true);
+  // Sandboxed iframes must not be granted allow-popups; this observer removes it if added later.
+  const sandboxFrames = root => {
+    if (!root || !root.querySelectorAll) return;
+    root.querySelectorAll('iframe').forEach(frame => {
+      if (frame.hasAttribute('sandbox')) {
+        const tokens = frame.getAttribute('sandbox').split(/\s+/).filter(Boolean).filter(token => token !== 'allow-popups' && token !== 'allow-popups-to-escape-sandbox');
+        frame.setAttribute('sandbox', tokens.join(' '));
+      }
+    });
+  };
+  const watch = () => {
+    const host = document.querySelector('criczone-ui');
+    if (!host || !host.shadowRoot) return;
+    sandboxFrames(host.shadowRoot);
+    new MutationObserver(() => sandboxFrames(host.shadowRoot)).observe(host.shadowRoot, { childList: true, subtree: true, attributes: true, attributeFilter: ['sandbox'] });
+  };
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', watch, { once: true });
+  else watch();
+})();
+</script>
+
+
+    <criczone-ui></criczone-ui>
+
+    <script src="/criczone6/script.js"></script>
+<script>
+// Restrict the embedded player so taps cannot open pop-under tabs or navigate the top page.
+customElements.whenDefined('criczone-ui').then(() => {
+  const host = document.querySelector('criczone-ui');
+  if (!host || !host.shadowRoot) return;
+  const applyPlayerSandbox = () => {
+    const frame = host.shadowRoot.querySelector('iframe#player');
+    if (frame && !frame.hasAttribute('sandbox')) {
+      frame.setAttribute('sandbox', 'allow-scripts allow-same-origin allow-forms allow-presentation');
+    }
+  };
+  const observer = new MutationObserver(applyPlayerSandbox);
+  observer.observe(host.shadowRoot, { childList: true, subtree: true });
+  applyPlayerSandbox();
+});
+</script>
+
+
+
+</body>
+</html>
