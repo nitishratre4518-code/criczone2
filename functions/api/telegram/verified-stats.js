@@ -6,7 +6,8 @@ export async function onRequestGet({request,env}){
  if(!env.TELEGRAM_DB)return json({error:"TELEGRAM_DB is not configured"},503);
  try{
   const db=env.TELEGRAM_DB;
-  for(const col of ["telegram_username TEXT","telegram_first_name TEXT","telegram_last_name TEXT"]){
+  await db.prepare("CREATE TABLE IF NOT EXISTS telegram_login_requests(nonce TEXT PRIMARY KEY,status TEXT NOT NULL DEFAULT 'pending',return_url TEXT NOT NULL,created_at INTEGER NOT NULL,expires_at INTEGER NOT NULL,telegram_user_id TEXT,verified_at INTEGER,telegram_username TEXT,telegram_first_name TEXT,telegram_last_name TEXT)").run();
+  for(const col of ["telegram_user_id TEXT","verified_at INTEGER","telegram_username TEXT","telegram_first_name TEXT","telegram_last_name TEXT"]){
    try{await db.prepare("ALTER TABLE telegram_login_requests ADD COLUMN "+col).run()}catch(e){if(!/duplicate column/i.test(String(e)))throw e}
   }
   const totals=await db.prepare("SELECT COUNT(DISTINCT telegram_user_id) AS verified_members,COUNT(*) AS successful_verifications,MAX(verified_at) AS last_verified_at FROM telegram_login_requests WHERE telegram_user_id IS NOT NULL AND verified_at IS NOT NULL AND status IN ('verified','completed')").first();
